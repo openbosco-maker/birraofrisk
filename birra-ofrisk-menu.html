@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birra O'Frisk — Menu</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Space+Mono:wght@400;700&display=swap');
+
+:root{
+  --ink:#1B1712;
+  --paper:#F5EDD9;
+  --paper-dim:#EBE0C6;
+  --gold:#E3A73B;
+  --gold-deep:#C98A22;
+  --olive:#4A5D3A;
+  --rust:#B5502E;
+  --line: rgba(27,23,18,0.14);
+  --shadow: rgba(27,23,18,0.25);
+}
+
+*{box-sizing:border-box; margin:0; padding:0;}
+
+body{
+  background:var(--ink);
+  color:var(--paper);
+  font-family:'Fraunces', serif;
+  -webkit-font-smoothing:antialiased;
+}
+
+::selection{ background:var(--gold); color:var(--ink); }
+
+/* ---------- HERO ---------- */
+.hero{
+  position:relative;
+  min-height:78vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:6vh 6vw 8vh;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse at 50% -10%, rgba(227,167,59,0.18), transparent 60%),
+    var(--ink);
+}
+
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 3px);
+  pointer-events:none;
+}
+
+.hero-eyebrow{
+  font-family:'Space Mono', monospace;
+  letter-spacing:0.35em;
+  text-transform:uppercase;
+  font-size:0.7rem;
+  color:var(--gold);
+  margin-bottom:1.6rem;
+  opacity:0;
+  animation: fadeUp 0.8s ease forwards 0.1s;
+}
+
+.hero h1{
+  font-family:'Anton', sans-serif;
+  font-weight:400;
+  font-size:clamp(3rem, 11vw, 7.5rem);
+  line-height:0.92;
+  letter-spacing:0.01em;
+  color:var(--paper);
+  text-transform:uppercase;
+  opacity:0;
+  animation: fadeUp 0.9s ease forwards 0.25s;
+}
+
+.hero h1 .accent{ color:var(--gold); }
+
+.hero-sub{
+  margin-top:1.8rem;
+  font-style:italic;
+  font-size:clamp(1rem, 1.6vw, 1.25rem);
+  color:var(--paper-dim);
+  max-width:32em;
+  opacity:0;
+  animation: fadeUp 0.9s ease forwards 0.45s;
+}
+
+.hero-loc{
+  margin-top:2.4rem;
+  font-family:'Space Mono', monospace;
+  font-size:0.75rem;
+  letter-spacing:0.08em;
+  color:rgba(245,237,217,0.55);
+  opacity:0;
+  animation: fadeUp 0.9s ease forwards 0.6s;
+}
+
+@keyframes fadeUp{
+  from{ opacity:0; transform:translateY(18px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+/* pint glyph */
+.pint{
+  width:34px; height:44px;
+  margin:0 auto 1.4rem;
+  opacity:0;
+  animation: fadeUp 0.8s ease forwards 0s;
+}
+
+/* ---------- STICKY NAV ---------- */
+.nav-wrap{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(27,23,18,0.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(227,167,59,0.25);
+}
+
+.nav{
+  display:flex;
+  gap:0.4rem;
+  overflow-x:auto;
+  padding:0.9rem 6vw;
+  scrollbar-width:none;
+}
+.nav::-webkit-scrollbar{ display:none; }
+
+.nav button{
+  flex:0 0 auto;
+  font-family:'Space Mono', monospace;
+  font-size:0.72rem;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  background:transparent;
+  border:1px solid rgba(245,237,217,0.22);
+  color:rgba(245,237,217,0.75);
+  padding:0.55rem 1rem;
+  border-radius:999px;
+  cursor:pointer;
+  transition:all 0.25s ease;
+  white-space:nowrap;
+}
+
+.nav button:hover{
+  border-color:var(--gold);
+  color:var(--gold);
+}
+
+.nav button.active{
+  background:var(--gold);
+  border-color:var(--gold);
+  color:var(--ink);
+  font-weight:700;
+}
+
+/* ---------- MENU BODY ---------- */
+.menu{
+  background:var(--paper);
+  color:var(--ink);
+  padding:5vh 6vw 14vh;
+  position:relative;
+}
+
+.section{
+  max-width:920px;
+  margin:0 auto 5.5rem;
+  scroll-margin-top:5.5rem;
+}
+
+.section-head{
+  display:flex;
+  align-items:baseline;
+  gap:1rem;
+  margin-bottom:0.6rem;
+  border-bottom:3px solid var(--ink);
+  padding-bottom:0.7rem;
+}
+
+.section-head h2{
+  font-family:'Anton', sans-serif;
+  font-weight:400;
+  font-size:clamp(1.7rem, 4vw, 2.6rem);
+  text-transform:uppercase;
+  letter-spacing:0.01em;
+}
+
+.section-head .note{
+  font-family:'Fraunces', serif;
+  font-style:italic;
+  font-size:0.95rem;
+  color:var(--olive);
+}
+
+.section-caption{
+  font-family:'Space Mono', monospace;
+  font-size:0.72rem;
+  letter-spacing:0.08em;
+  color:var(--rust);
+  text-transform:uppercase;
+  margin-top:0.9rem;
+  margin-bottom:0.4rem;
+}
+
+.item{
+  display:grid;
+  grid-template-columns: 1fr auto;
+  gap:0.4rem 1.2rem;
+  align-items:baseline;
+  padding:1.1rem 0;
+  border-bottom:1px dashed var(--line);
+}
+
+.item:last-child{ border-bottom:none; }
+
+.item-name{
+  font-weight:600;
+  font-size:1.08rem;
+  letter-spacing:0.01em;
+}
+
+.item-desc{
+  grid-column:1 / -1;
+  font-style:italic;
+  font-size:0.92rem;
+  color:rgba(27,23,18,0.68);
+  line-height:1.5;
+  margin-top:-0.2rem;
+}
+
+.item-note{
+  grid-column:1 / -1;
+  font-family:'Space Mono', monospace;
+  font-size:0.72rem;
+  letter-spacing:0.02em;
+  color:var(--olive);
+  margin-top:-0.15rem;
+}
+
+.price{
+  font-family:'Space Mono', monospace;
+  font-weight:700;
+  font-size:1rem;
+  background:var(--ink);
+  color:var(--gold);
+  padding:0.2rem 0.55rem;
+  border-radius:4px;
+  white-space:nowrap;
+  height:fit-content;
+}
+
+.single-line{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:1.2rem;
+  padding:1.1rem 0;
+  border-bottom:1px dashed var(--line);
+}
+.single-line:last-child{ border-bottom:none; }
+.single-line .item-name{ display:flex; align-items:baseline; gap:0.6rem; flex-wrap:wrap; }
+.single-line .item-desc-inline{
+  font-style:italic;
+  font-weight:400;
+  font-size:0.92rem;
+  color:rgba(27,23,18,0.68);
+}
+
+/* ---------- SIZE TABLE (spina / vino) ---------- */
+.size-head{
+  display:grid;
+  grid-template-columns: 1fr 52px 52px;
+  gap:0.6rem;
+  padding:0 0 0.8rem;
+  font-family:'Space Mono', monospace;
+  font-size:0.95rem;
+  font-weight:700;
+  letter-spacing:0.03em;
+  text-transform:uppercase;
+  color:var(--paper);
+}
+.size-head span{
+  text-align:center;
+  background:var(--ink);
+  padding:0.3rem 0.2rem;
+  border-radius:4px;
+}
+.size-head span:first-child{
+  text-align:left;
+  background:none;
+  padding:0;
+}
+
+.item-sizes{
+  display:grid;
+  grid-template-columns: 1fr 52px 52px;
+  gap:0.6rem 0.6rem;
+  align-items:baseline;
+  padding:1.1rem 0;
+  border-bottom:1px dashed var(--line);
+}
+.item-sizes:last-child{ border-bottom:none; }
+.item-sizes .item-desc{ grid-column:1 / -1; margin-top:0.15rem; }
+.item-sizes .price{ text-align:center; justify-self:center; min-width:44px; }
+
+/* ---------- TAG ROW (bottled beer w/ brewery) ---------- */
+.item-tag{
+  display:grid;
+  grid-template-columns: 1fr auto;
+  gap:0.4rem 1.2rem;
+  align-items:baseline;
+  padding:1.1rem 0;
+  border-bottom:1px dashed var(--line);
+}
+.item-tag:last-child{ border-bottom:none; }
+.item-tag .item-desc{ grid-column:1 / -1; margin-top:-0.2rem; }
+.tag-price-group{
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+}
+.tag{
+  font-family:'Space Mono', monospace;
+  font-size:0.66rem;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  color:var(--olive);
+  border:1px solid var(--olive);
+  padding:0.2rem 0.5rem;
+  border-radius:999px;
+  white-space:nowrap;
+  height:fit-content;
+}
+
+/* ---------- WINE ROW (bottle + calice) ---------- */
+.item-wine{
+  display:grid;
+  grid-template-columns: 1fr 60px 56px;
+  gap:0.4rem 0.6rem;
+  align-items:baseline;
+  padding:1.1rem 0;
+  border-bottom:1px dashed var(--line);
+}
+.item-wine:last-child{ border-bottom:none; }
+.item-wine .item-desc{ grid-column:1 / -1; margin-top:-0.2rem; }
+.item-wine .price{ text-align:center; justify-self:center; }
+.calice-label{
+  grid-column:3;
+  font-family:'Space Mono', monospace;
+  font-size:0.6rem;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+  color:rgba(27,23,18,0.5);
+  text-align:center;
+  margin-top:-0.7rem;
+}
+
+/* ---------- NAV DIVIDER ---------- */
+.nav-divider{
+  flex:0 0 auto;
+  width:1px;
+  align-self:stretch;
+  background:rgba(245,237,217,0.2);
+  margin:0.3rem 0.4rem;
+}
+
+/* ---------- BEER GAUGE (signature element) ---------- */
+.gauge-wrap{
+  position:fixed;
+  right:22px;
+  bottom:26px;
+  z-index:60;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:0.4rem;
+  pointer-events:none;
+}
+
+.gauge-label{
+  font-family:'Space Mono', monospace;
+  font-size:0.62rem;
+  letter-spacing:0.1em;
+  color:var(--ink);
+  background:var(--paper);
+  border:1px solid var(--ink);
+  padding:0.15rem 0.4rem;
+  border-radius:3px;
+  opacity:0.85;
+}
+
+.gauge{
+  width:34px;
+  height:66px;
+}
+
+/* ---------- COPERTO NOTICE BAR ---------- */
+.coperto-bar{
+  background:var(--gold);
+  color:var(--ink);
+  text-align:center;
+  font-family:'Space Mono', monospace;
+  font-weight:700;
+  font-size:0.75rem;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  padding:0.55rem 1rem;
+}
+.footer{
+  background:var(--ink);
+  color:rgba(245,237,217,0.6);
+  text-align:center;
+  padding:4rem 6vw 3rem;
+  font-family:'Space Mono', monospace;
+  font-size:0.75rem;
+  letter-spacing:0.05em;
+}
+.footer .fname{
+  font-family:'Anton', sans-serif;
+  color:var(--gold);
+  font-size:1.4rem;
+  letter-spacing:0.02em;
+  margin-bottom:0.8rem;
+  text-transform:uppercase;
+}
+
+.coperto-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:0.5rem;
+  margin:1.2rem auto 0.4rem;
+  background:rgba(227,167,59,0.12);
+  border:1px solid var(--gold);
+  color:var(--gold);
+  font-family:'Space Mono', monospace;
+  font-weight:700;
+  font-size:0.85rem;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  padding:0.55rem 1.1rem;
+  border-radius:999px;
+}
+
+.footer-contact{
+  margin-top:2.4rem;
+  padding-top:2rem;
+  border-top:1px solid rgba(245,237,217,0.15);
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:0.7rem 1.4rem;
+}
+
+.footer-contact a{
+  color:var(--gold);
+  text-decoration:none;
+  border-bottom:1px solid rgba(227,167,59,0.4);
+  padding-bottom:1px;
+  transition:opacity 0.2s ease;
+}
+.footer-contact a:hover{ opacity:0.75; }
+
+.footer-venue{
+  font-family:'Fraunces', serif;
+  font-style:italic;
+  font-size:0.95rem;
+  color:rgba(245,237,217,0.7);
+  margin-bottom:0.6rem;
+}
+
+@media (max-width:640px){
+  .hero{ min-height:70vh; }
+  .gauge-wrap{ right:14px; bottom:16px; }
+  .gauge{ width:26px; height:50px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <svg class="pint" viewBox="0 0 40 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8 4 L32 4 L29 48 L11 48 Z" stroke="#E3A73B" stroke-width="2.5" fill="none"/>
+    <path d="M10.5 14 L29.5 14 L28 44 C28 46 26 47 25 47 L15 47 C14 47 12 46 12 44 Z" fill="#E3A73B" opacity="0.85"/>
+  </svg>
+  <div class="hero-eyebrow">Pub Artigianale</div>
+  <h1>BIRRA<br><span class="accent">O'FRISK</span></h1>
+  <p class="hero-sub">Zeppole, culatello, pizza in teglia e birra artigianale — la cucina di casa nostra, servita fresca ogni giorno.</p>
+  <p class="hero-loc">SCROLL PER SFOGLIARE IL MENU ↓</p>
+</section>
+
+<div class="nav-wrap">
+  <nav class="nav" id="nav"></nav>
+</div>
+<div class="coperto-bar">Servizio e coperto 2€</div>
+
+<main class="menu" id="menu"></main>
+
+<footer class="footer">
+  <div class="fname">Birra O'Frisk</div>
+  I prezzi si intendono IVA inclusa · Salse, culatello e spumoni di produzione propria e artigianale
+  <br>
+  <span class="coperto-badge">Servizio e coperto 2€</span>
+
+  <div class="footer-contact">
+    <span class="footer-venue" style="width:100%; flex-basis:100%;">Residenza Rurale Incartata</span>
+    <a href="https://wa.me/393342258452" target="_blank" rel="noopener">WhatsApp +39 334 225 8452</a>
+    <a href="https://www.residenzaruraleincartata.it" target="_blank" rel="noopener">www.residenzaruraleincartata.it</a>
+    <a href="https://www.google.com/maps/search/?api=1&query=Residenza+Rurale+Incartata" target="_blank" rel="noopener">Vedi su Google Maps</a>
+  </div>
+</footer>
+
+<div class="gauge-wrap">
+  <div class="gauge-label" id="gaugeLabel">0%</div>
+  <svg class="gauge" viewBox="0 0 40 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <clipPath id="glassClip">
+        <path d="M6 4 L34 4 L30 74 L10 74 Z"/>
+      </clipPath>
+    </defs>
+    <rect id="beerFill" x="0" y="78" width="40" height="0" fill="#E3A73B" clip-path="url(#glassClip)"/>
+    <path d="M6 4 L34 4 L30 74 L10 74 Z" stroke="#F5EDD9" stroke-width="2" fill="none"/>
+  </svg>
+</div>
+
+<script>
+const data = [
+  {
+    id:"sfizi", title:"Sfizi di Benvenuto", caption:null,
+    items:[
+      {name:"Zeppolelle salate", price:"4€", line:true},
+      {name:"Chips delle nostre patate di montagna", price:"4€", line:true},
+      {name:"Salse fatte in casa: maionese, ketchup, tzatziki", price:"2€", line:true},
+      {name:"Tris mediterraneo", desc:"Olive condite, lupini e taralli ai semi", price:"5€"}
+    ]
+  },
+  {
+    id:"antipasti", title:"Antipasti della Casa", caption:null,
+    items:[
+      {name:"Mascuotto e pomodori all'insalata", desc:"Con olive, cipollotto, cetrioli", price:"7€"},
+      {name:"Fiordilatte e culatello di maiale nero", desc:"Nostra produzione", note:"Boccone spezzato a mano, 120g di latte vaccino del premiato Caseificio Montella", price:"12€"},
+      {name:"Ciambotta di stagione", price:"7€", line:true},
+      {name:"Verdure grigliate del giorno", price:"6€", line:true},
+      {name:"Polpettine veg di verdure e legumi", desc:"Con sugo piccante", price:"7€"},
+      {name:"Taglierino di formaggi", price:"8€", line:true},
+      {name:"Taglierino di salumi", price:"8€", line:true}
+    ]
+  },
+  {
+    id:"primi", title:"Pasta e Fagioli", caption:null,
+    items:[
+      {name:"Pasta e fagioli azzeccata", desc:"O variante del giorno", price:"9€"}
+    ]
+  },
+  {
+    id:"pizza", title:"Pizza in Teglia", caption:"Due tranci",
+    items:[
+      {name:"Pacchetelle e fiordilatte", desc:"Pomodoro San Marzano e fiordilatte a fette", price:"7€"},
+      {name:"Marinara", desc:"Pomodoro San Marzano, aglio, olive, origano e alici di Cetara", price:"7€"},
+      {name:"Pancetta arrotolata", desc:"Pomodoro San Marzano e scamorzone affumicato", price:"9€"}
+    ]
+  },
+  {
+    id:"secondi", title:"Secondi a Piatto", caption:null,
+    items:[
+      {name:"Porchetta artigianale di Remigio Aiello", desc:"Con patate al forno e nostra maionese", price:"12€"},
+      {name:"Primo sale", desc:"Pecorino condito, pomodoro a fette e pesto di basilico", price:"8€"},
+      {name:"Frittata dell'orto", desc:"Con scamorzone affumicata e pesto di pomodori secchi", price:"9€"}
+    ]
+  },
+  {
+    id:"dolci", title:"Dolci della Casa", caption:null,
+    items:[
+      {name:"Pasta cresciuta", desc:"Zucchero e cannella", price:"4€"},
+      {name:"Birramisù", desc:"Con birra artigianale", price:"5€"},
+      {name:"Buccaciello di panna cotta", desc:"Con riduzione di frutti rossi", price:"5€"}
+    ]
+  },
+  {
+    id:"spumoni", title:"Spumoni Artigianali", caption:"Pasticceria Leone — Calvanico",
+    items:[
+      {name:"Nostalgia", desc:"Fragola e limone", price:"4€"},
+      {name:"Nocciolosa", desc:"Nocciola e cacao", price:"4€"},
+      {name:"Cassata", desc:"Con canditi", price:"4€"}
+    ]
+  },
+  {
+    id:"spina", title:"Birra alla Spina", caption:null, group:"bere", sizeHead:["20 cl","40 cl"],
+    items:[
+      {name:"Poretti 3 Luppoli", desc:"(Lager vol 4,8) bionda beverina nazionale", sizes:["3€","5€"]},
+      {name:"Selvatica", desc:"(Blonde Ale vol 5) bionda beverina classica artigianale", sizes:["3€","5€"]},
+      {name:"1851 Rossa", desc:"(Belgian Dubbel vol 6,5) rossa corposa e intensa, artigianale passione agricola", sizes:["4€","6€"]}
+    ]
+  },
+  {
+    id:"spritz", title:"Spritz O'Frisk & Cocktail", caption:null, group:"bere",
+    items:[
+      {name:"Falanghina Spritz", desc:"Falanghina frizzante e Select", price:"5€"},
+      {name:"Rosato Spritz", desc:"Rosato di Aglianico frizzante e Select", price:"5€"},
+      {name:"Selvatica Spritz", desc:"Bionda alla spina artigianale e Select", price:"5€"},
+      {name:"Cocktail del giorno", desc:"Base gin artigianale", price:"8€"}
+    ]
+  },
+  {
+    id:"bottiglia", title:"Birra Artigianale in Bottiglia", caption:"Bott. da 33 cl · 5€", group:"bere",
+    items:[
+      {name:"Ianculidda", desc:"Blanche al grano antico vol 5", price:"5€", tag:"Micro Birrificio Maltopiu'"},
+      {name:"Carosella", desc:"White IPA al grano antico vol 6,3", price:"5€", tag:"Micro Birrificio Maltopiu'"},
+      {name:"Nucella", desc:"Porter scura alla nocciola di Giffoni IGP vol 6,5", price:"5€", tag:"Micro Birrificio Maltopiu'"},
+      {name:"Sanacore", desc:"Strong Ale rossa al miele di castagna vol 8,5", price:"5€", tag:"Micro Birrificio Maltopiu'"},
+      {name:"Ficus", desc:"Dark Ale rossa al fico bianco del Cilento vol 8,4", price:"5€", tag:"Micro Birrificio Maltopiu'"},
+      {name:"335 Gluten Free", desc:"Pilsner senza glutine vol 2,5", price:"5€", tag:"Cifra"}
+    ]
+  },
+  {
+    id:"bibite", title:"Bibite", caption:null, group:"bere",
+    items:[
+      {name:"Mole Cola", desc:"La vera cola italiana", price:"3€"},
+      {name:"Mole Cola 0 zuccheri", desc:"La vera cola italiana, senza zuccheri", price:"3€"}
+    ]
+  },
+  {
+    id:"vino", title:"Vino in Bottiglia", caption:"Di Renato Cosimato, Azienda Agricola · bott. da 75 cl", group:"bere",
+    items:[
+      {name:"Rosso della casa", price:"6€"},
+      {name:"Aglianico", desc:"Campania IGP annata 2022 · vol 12,5", price:"16€", calice:"4€"},
+      {name:"Fiano", desc:"Campania IGP annata 2023 · vol 13,5", price:"16€", calice:"4€"},
+      {name:"Rosato Aglianico", desc:"Campania IGP annata 2024 · vol 12,5", price:"16€", calice:"4€"}
+    ]
+  },
+  {
+    id:"amari", title:"Amari e Distillati Speciali Artigianali", caption:"4€ salvo diversa indicazione", group:"bere",
+    items:[
+      {name:"Limoncello", desc:"Artigianale al limone sfusato di Amalfi · vol 30", price:"4€"},
+      {name:"Amaro Penna", desc:"Storico amaro alle erbe di Sassano · vol 30", price:"4€"},
+      {name:"Liquirizia Caffo", desc:"Originale calabrese · vol 30", price:"4€"},
+      {name:"Grappa Barricata", desc:"Al Greco di Tufo in botte di rovere · vol 42", price:"4€"},
+      {name:"Selezione di gin e distillati della settimana", priceNote:"Su richiesta"}
+    ]
+  }
+];
+
+const nav = document.getElementById('nav');
+const menu = document.getElementById('menu');
+
+let lastGroup = null;
+
+data.forEach(section => {
+  if(section.group && section.group !== lastGroup && lastGroup !== null){
+    const div = document.createElement('div');
+    div.className = 'nav-divider';
+    nav.appendChild(div);
+  }
+  lastGroup = section.group || lastGroup;
+
+  const btn = document.createElement('button');
+  btn.textContent = section.title;
+  btn.dataset.target = section.id;
+  btn.addEventListener('click', () => {
+    document.getElementById(section.id).scrollIntoView({behavior:'smooth', block:'start'});
+  });
+  nav.appendChild(btn);
+
+  const sec = document.createElement('section');
+  sec.className = 'section';
+  sec.id = section.id;
+
+  const head = document.createElement('div');
+  head.className = 'section-head';
+  head.innerHTML = `<h2>${section.title}</h2>${section.caption ? `<span class="note">${section.caption}</span>` : ''}`;
+  sec.appendChild(head);
+
+  if(section.sizeHead){
+    const sh = document.createElement('div');
+    sh.className = 'size-head';
+    sh.innerHTML = `<span></span><span>${section.sizeHead[0]}</span><span>${section.sizeHead[1]}</span>`;
+    sec.appendChild(sh);
+  }
+
+  section.items.forEach(it => {
+    if(it.line){
+      const row = document.createElement('div');
+      row.className = 'single-line';
+      row.innerHTML = `<div class="item-name">${it.name}</div><div class="price">${it.price}</div>`;
+      sec.appendChild(row);
+    } else if(it.sizes){
+      const row = document.createElement('div');
+      row.className = 'item-sizes';
+      row.innerHTML = `
+        <div class="item-name">${it.name}</div>
+        <div class="price">${it.sizes[0]}</div>
+        <div class="price">${it.sizes[1]}</div>
+        ${it.desc ? `<div class="item-desc">${it.desc}</div>` : ''}
+      `;
+      sec.appendChild(row);
+    } else if(it.tag){
+      const row = document.createElement('div');
+      row.className = 'item-tag';
+      row.innerHTML = `
+        <div class="item-name">${it.name}</div>
+        <div class="tag-price-group">
+          ${it.price ? `<div class="price">${it.price}</div>` : ''}
+          <div class="tag">${it.tag}</div>
+        </div>
+        ${it.desc ? `<div class="item-desc">${it.desc}</div>` : ''}
+      `;
+      sec.appendChild(row);
+    } else if(it.calice){
+      const row = document.createElement('div');
+      row.className = 'item-wine';
+      row.innerHTML = `
+        <div class="item-name">${it.name}</div>
+        <div class="price">${it.price}</div>
+        <div class="price">${it.calice}</div>
+        ${it.desc ? `<div class="item-desc">${it.desc}</div>` : ''}
+        <div class="calice-label">calice</div>
+      `;
+      sec.appendChild(row);
+    } else {
+      const row = document.createElement('div');
+      row.className = 'item';
+      row.innerHTML = `
+        <div class="item-name">${it.name}</div>
+        <div class="price">${it.price ? it.price : (it.priceNote || '')}</div>
+        ${it.desc ? `<div class="item-desc">${it.desc}</div>` : ''}
+        ${it.note ? `<div class="item-note">${it.note}</div>` : ''}
+      `;
+      sec.appendChild(row);
+    }
+  });
+
+  menu.appendChild(sec);
+});
+
+// active nav highlight on scroll
+const navButtons = [...nav.querySelectorAll('button')];
+const sections = data.map(d => document.getElementById(d.id));
+
+function setActive(id){
+  navButtons.forEach(b => b.classList.toggle('active', b.dataset.target === id));
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) setActive(e.target.id);
+  });
+}, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+
+sections.forEach(s => observer.observe(s));
+setActive(data[0].id);
+
+// beer gauge fill on scroll
+const beerFill = document.getElementById('beerFill');
+const gaugeLabel = document.getElementById('gaugeLabel');
+
+function updateGauge(){
+  const menuRect = menu.getBoundingClientRect();
+  const menuTop = menu.offsetTop;
+  const menuHeight = menu.offsetHeight;
+  const scrollY = window.scrollY + window.innerHeight * 0.6;
+  let pct = (scrollY - menuTop) / menuHeight;
+  pct = Math.max(0, Math.min(1, pct));
+  const maxH = 74; // glass interior height approx
+  beerFill.setAttribute('y', 78 - (maxH * pct));
+  beerFill.setAttribute('height', maxH * pct);
+  gaugeLabel.textContent = Math.round(pct*100) + '%';
+}
+
+window.addEventListener('scroll', updateGauge, { passive:true });
+window.addEventListener('resize', updateGauge);
+updateGauge();
+</script>
+
+</body>
+</html>
